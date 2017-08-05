@@ -4,11 +4,21 @@
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"serve": "nodemon ./server/server.js",
 		"test": "jest"
 	},
 	"dependencies": {
+		"axios": "^0.16.2",
+		"body-parser": "^1.17.2",
+		"cors": "^2.8.4",
+		"express": "^4.15.3",
+		"morgan": "^1.8.2",
+		"nodemon": "^1.11.0",
+		"path": "^0.12.7",
+		"pg": "^7.1.0",
 		"react": "16.0.0-alpha.12",
-		"react-native": "0.47.1"
+		"react-native": "0.47.1",
+		"sequelize": "^4.4.2"
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",
