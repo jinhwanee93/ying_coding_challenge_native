@@ -7,15 +7,33 @@ const db = new Sequelize(PORTGRES_URL)
 // Defining USERS tables for the application
 const Users = db.define('users', {
   username: {
-    type: Sequelize.STRING(20)
+    type: Sequelize.STRING(20),
+    allowNull: false
   },
   password: {
-    type: Sequelize.STRING(20)
+    type: Sequelize.STRING(20),
+    allowNull: false
   }
 })
 
+const Tasks = db.define('tasks', {
+  entry: {
+    type: Sequelize.STRING(255),
+    allowNull: false
+  },
+  isCompleted: {
+    type: Sequelize.BOOLEAN(),
+  }
+})
+
+// School.hasMany(User, { foreignKey: { name: 'school_id', allowNull: true }, onDelete: 'CASCADE' });
+
+Users.hasMany(Tasks, { foreignKey: { name: 'user_id', allowNull: true }, onDelete: 'CASCADE' });
+Tasks.belongsTo(Users, { foreignKey: { name: 'user_id', allowNull: true }, onDelete: 'CASCADE' });
+
 // Syncing tables
 Users.sync()
+Tasks.sync()
 
 db.authenticate()
   .then((err) => {
@@ -26,5 +44,6 @@ db.authenticate()
   })
 
   module.exports = {
-    Users: Users
+    Users: Users,
+    Tasks: Tasks
   }

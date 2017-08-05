@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('../database/db_config');
-const routes = require('../database/db_model');
+const routes = require('../database/db_routes');
 
 // Define port access
 const PORT = process.env.PORT || 8082;
