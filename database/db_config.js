@@ -6,23 +6,23 @@ const db = new Sequelize(PORTGRES_URL)
 
 // Defining USERS tables for the application
 const Users = db.define('users', {
-  username: {
-    type: Sequelize.STRING(20),
+  password: {
+    type: Sequelize.STRING,
     allowNull: false
   },
-  password: {
-    type: Sequelize.STRING(20),
+  username: {
+    type: Sequelize.STRING,
     allowNull: false
   }
 })
 
 const Tasks = db.define('tasks', {
   entry: {
-    type: Sequelize.STRING(255),
+    type: Sequelize.STRING,
     allowNull: false
   },
   isCompleted: {
-    type: Sequelize.BOOLEAN(),
+    type: Sequelize.BOOLEAN,
   }
 })
 

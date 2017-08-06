@@ -1,37 +1,31 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
+import { AppRegistry } from 'react-native';
 import App from './src/containers/App';
+import rootReducer from './src/reducers/index';
+
+// const logger = createLogger({});
+const middleWare = [thunk]
+
+console.log('is applyMiddleWare here? ', applyMiddleware);
+
+const createStoreWithMiddleWare = applyMiddleware(...middleWare)(createStore);
+
+const store = createStoreWithMiddleWare(rootReducer);
+//const store = createStore(Reducers);
+  console.disableYellowBox = true;
 
 export default class coding_challenge extends Component {
   render() {
     return (
-      <View>
-        {/* <Text style={styles.welcome}>
-          Welcome to your coding challenge!
-        </Text> */}
+      <Provider store={store}>
         <App />
-      </View>
+      </Provider>
     );
   }
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#F5FCFF',
-//   },
-//   welcome: {
-//     fontSize: 20,
-//     textAlign: 'center',
-//     margin: 10,
-//   },
-// });
 
 AppRegistry.registerComponent('coding_challenge', () => coding_challenge);
