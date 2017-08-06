@@ -21,7 +21,6 @@ class Login extends Component {
     this.usernameChange = this.usernameChange.bind(this);
     this.passwordChange = this.passwordChange.bind(this);
 
-    // const { dispatch, errorMessage, isAuthenticated } = this.props;
   }
 
   usernameChange (e) {

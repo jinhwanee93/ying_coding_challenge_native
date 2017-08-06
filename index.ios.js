@@ -9,13 +9,9 @@ import rootReducer from './src/reducers/index';
 
 // const logger = createLogger({});
 const middleWare = [thunk]
-
-console.log('is applyMiddleWare here? ', applyMiddleware);
-
 const createStoreWithMiddleWare = applyMiddleware(...middleWare)(createStore);
 
 const store = createStoreWithMiddleWare(rootReducer);
-//const store = createStore(Reducers);
   console.disableYellowBox = true;
 
 export default class coding_challenge extends Component {

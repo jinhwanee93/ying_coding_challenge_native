@@ -15,6 +15,7 @@ const app = express()
   .use(cors())
   
   // Parsing body of the request in { Content-type: x-www-form-urlencoded }
+  .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .use('/', routes)
 

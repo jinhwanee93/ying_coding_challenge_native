@@ -28,8 +28,8 @@ render() {
   return(
     <Router>
       <Scene key="root" >
-        <Scene key="login" component={Login} hideNavBar={true} title="Login" isAuthenticated={isAuthenticated} errorMessage={errorMessage} dispatch={dispatch} initial />
-        <Scene key="todo" component={ToDoList} hideNavBar={true} title="Todo" />
+        <Scene key="login" component={Login} hideNavBar={true} title="Login" isAuthenticated={isAuthenticated} errorMessage={errorMessage} dispatch={dispatch} />
+        <Scene key="todo" component={ToDoList} hideNavBar={true} title="Todo" initial />
         <Scene key="signup" component={SignUp} hideNavBar={true} title="Signup" />
 
       </Scene>
