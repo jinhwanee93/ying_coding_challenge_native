@@ -53,7 +53,6 @@ router.get('/api/login/:username/:password', (req, res) => {
 })
 // Defining routes for tasks
 router.post('/api/addTask', (req, res) => {
-  console.log('REQ in the post ', req.body)
   db.Tasks.create({
     user_id: req.body.user_id,
     entry: req.body.entry,

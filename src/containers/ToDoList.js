@@ -9,21 +9,20 @@ import {
 } from 'react-native';
 import TodoEntry from '../components/ToDoEntry';
 import axios from 'axios';
+import Base from '../components/Base';
 
-class ToDoList extends Component {
-
+class ToDoList extends Base {
   constructor() {
     super()
     this.state = {
       entry: '',
-      todos: [{
-        entry: 'i hate this thing so much right now',
-        isCompleted: false,
-        createdAt: 'today'
-      }]
+      todos: [],
     }
-    this.handleEntryChange = this.handleEntryChange.bind(this);
-    this.handleAdd = this.handleAdd.bind(this);
+
+    this.autoBind(
+      "handleEntryChange",
+      "handleAdd"
+    )
   }
 
   componentWillMount() {
@@ -41,17 +40,17 @@ class ToDoList extends Component {
     })
   }
 
-   handleAdd() {
-     const body = {
-       entry: this.state.entry,
-       isCompleted: false
-     }
-    axios.post('http://localhost:8082/api/addTask', body)
-    .then(result => {
-      this.setState({
-        todos: [...this.state.todos, result.data]
-      })
+  handleAdd() {
+    const body = {
+      entry: this.state.entry,
+      isCompleted: false
+    }
+  axios.post('http://localhost:8082/api/addTask', body)
+  .then(result => {
+    this.setState({
+      todos: [...this.state.todos, result.data]
     })
+  })
   }
 
   render() {

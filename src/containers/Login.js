@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { loginUser } from '../actions/Authentication';
+import Base from '../components/Base';
 
-class Login extends Component {
+class Login extends Base {
 
   constructor() {
     super()
@@ -17,10 +18,11 @@ class Login extends Component {
       username: '',
       password: '',
     }
-    this.handleLoginClick = this.handleLoginClick.bind(this);
-    this.usernameChange = this.usernameChange.bind(this);
-    this.passwordChange = this.passwordChange.bind(this);
-
+    this.autoBind(
+      "handleLoginClick",
+      "usernameChange",
+      "passwordChange"
+    )
   }
 
   usernameChange (e) {

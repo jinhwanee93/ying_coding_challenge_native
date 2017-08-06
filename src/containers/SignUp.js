@@ -16,7 +16,7 @@ class SignUp extends Component {
     return(
       <View>
         <Text>
-          Sign-up shiet
+          Sign-up container
         </Text>
       </View>
     )

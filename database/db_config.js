@@ -26,8 +26,6 @@ const Tasks = db.define('tasks', {
   }
 })
 
-// School.hasMany(User, { foreignKey: { name: 'school_id', allowNull: true }, onDelete: 'CASCADE' });
-
 Users.hasMany(Tasks, { foreignKey: { name: 'user_id', allowNull: true }, onDelete: 'CASCADE' });
 Tasks.belongsTo(Users, { foreignKey: { name: 'user_id', allowNull: true }, onDelete: 'CASCADE' });
 
