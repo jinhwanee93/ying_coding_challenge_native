@@ -5,7 +5,6 @@
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"serve": "nodemon ./server/server.js",
-		"clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
 		"test": "jest"
 	},
 	"dependencies": {

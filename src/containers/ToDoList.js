@@ -16,30 +16,22 @@ class ToDoList extends Component {
     super()
     this.state = {
       entry: '',
-      todos: []
+      todos: [{
+        entry: 'i hate this thing so much right now',
+        isCompleted: false,
+        createdAt: 'today'
+      }]
     }
     this.handleEntryChange = this.handleEntryChange.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
-    this.getTasks = this.getTasks.bind(this);
   }
 
-  componentDidMount() {
-    // this.getTasks()
-    // console.log('componentDidMount', this.state.todos)
+  componentWillMount() {
     axios.get('http://localhost:8082/api/getAllTasks')
     .then(result => {
       this.setState({
         todos: result.data
-      })
-    })
-  }
-
-  getTasks() {
-    axios.get('http://localhost:8082/api/getAllTasks')
-    .then(result => {
-      this.setState({
-        todos: result.data
-      })
+      }, () => console.log('PLISSS', this.state.todos))
     })
   }
 
@@ -50,14 +42,12 @@ class ToDoList extends Component {
   }
 
    handleAdd() {
-     console.log('what is the state of the entry? ', this.state.entry)
      const body = {
        entry: this.state.entry,
        isCompleted: false
      }
     axios.post('http://localhost:8082/api/addTask', body)
     .then(result => {
-      console.log('what is the result in the post? ', result.data)
       this.setState({
         todos: [...this.state.todos, result.data]
       })
@@ -65,7 +55,7 @@ class ToDoList extends Component {
   }
 
   render() {
-    console.log('what is the state?', this.state)
+    console.log('what is the state?', this.state.todos)
     return(
       <View style={styles.container}>
         <TextInput 
@@ -77,14 +67,13 @@ class ToDoList extends Component {
               <Text>Add</Text>
           </TouchableOpacity>
           <ScrollView>
-            {this.state.todos.length === 0 ? <Text>Waiting for ToDo</Text> : this.state.todos.map(todoEntries => {
+            {this.state.todos.map(todoEntries => (
               <TodoEntry 
-                id={todoEntries.id}
                 entry={todoEntries.entry}
                 isCompleted={todoEntries.isCompleted} 
                 createdAt={todoEntries.createdAt}
               />
-            })}
+            ))}
           </ScrollView>
           <TodoEntry />
       </View>
