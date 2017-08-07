@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet 
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { loginUser } from '../actions/Authentication';
@@ -25,31 +24,31 @@ class Login extends Base {
     )
   }
 
+  // Handle username input
   usernameChange (e) {
-    console.log('what is the e? ', e)
     this.setState({
       username: e
     })
   }
 
+  // Handle password input
   passwordChange (e) {
-    console.log('what is the e? ', e)
     this.setState({
       password: e
     })
   }
 
+  // Handle login submission
   handleLoginClick() {
     const creds = { 
       username: this.state.username,
       password: this.state.password
     }
-    console.log('this is creds on line 48',creds)
     this.props.dispatch(loginUser(creds))
   }
 
+  // Rendering login component
   render() {
-    console.log('what is the state? ', this.state)
     return(
       <View style={{ marginTop: 10 }}>
         <TextInput placeholder="username" onChangeText={text => this.usernameChange(text) }></TextInput>

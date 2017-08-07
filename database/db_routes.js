@@ -3,10 +3,9 @@ const router = express.Router();
 const db = require('./db_config');
 const utils = require('../utils/utils');
 const bcrypt = require('bcryptjs');
-// const Promise = require('bluebird');
+const Promise = require('bluebird');
 
-// Defining routes for USER
-
+// Adding users to the database, playing aronud with ES7 syntax for this route
 const postUser = async (req, res) => {
   try {
     const person = await db.Users.findOne({ where: { username: req.body.username } });
@@ -22,17 +21,16 @@ const postUser = async (req, res) => {
   } catch (error) {
     res.send(error);
   }
-}; 
+};
 
-// Debugging practices for users
-
+// Debugging practice for identifying if the users are being plugged in correctly
 router.get('/api/getUsers', (req, res) => {
   db.Users.findAll()
   .then(users => res.send(users))
   .catch(err => res.send(err))
 })
 
-// ===>
+// Getting information if the username and password credentials match
 router.get('/api/login/:username/:password', (req, res) => {
   console.log('what is the request that we are getting here?', req.params)
   db.Users.findOne({
@@ -51,7 +49,8 @@ router.get('/api/login/:username/:password', (req, res) => {
   })
   .catch(err => res.send(err))
 })
-// Defining routes for tasks
+
+// Adding tasks to the database
 router.post('/api/addTask', (req, res) => {
   db.Tasks.create({
     user_id: req.body.user_id,
@@ -62,6 +61,7 @@ router.post('/api/addTask', (req, res) => {
   .catch(err => res.send(err))
 })
 
+// Identifying a task by used id
 router.get('/api/getTasks/:user_id', (req, res) => {
   db.Tasks.find({
     where: { user_id: req.params.user_id }
@@ -70,26 +70,36 @@ router.get('/api/getTasks/:user_id', (req, res) => {
   .catch(err => res.send(err))
 })
 
-// debugging the routes, identifying all the tasks in the database
-
+// Debugging the routes, identifying all the tasks in the database
 router.get('/api/getAllTasks/', (req, res) => {
   db.Tasks.findAll()
   .then(tasks => res.send(tasks))
   .catch(err => res.send(err))
 })
 
-router.put('/api/updateTask/:task_id', (req, res) => {
+// Identifying only one tasks in case data has to be front-loaded in a specified format
+router.get('/api/getOneTask/:task_id', (req, res) => {
   db.Tasks.findById(req.params.task_id)
-  .then(data => {
+  .then(tasks => res.send(tasks))
+  .catch(err => res.send(err))
+})
+
+// Applying update functionality in case of an edit for a specific task
+router.put('/api/updateTask/:task_id', (req, res) => {
+  console.log('what is the request coming through here? ', req.body, res.body)
+  db.Tasks.findById(req.params.task_id)
+  .then((data) => {
     data.update({
       user_id: req.body.user_id,
       entry: req.body.entry,
       isCompleted: req.body.isCompleted
-    }, res.send(data))
+    })
+    .then(result => res.send(result))
   })
   .catch(err => res.send(err))
 })
 
+// Applied a deleting route for deletion functionality
 router.delete('/api/deleteTask/:task_id', (req, res) => {
   db.Tasks.destroy({
     where: { id: req.params.task_id }
@@ -97,30 +107,7 @@ router.delete('/api/deleteTask/:task_id', (req, res) => {
   .catch(err => res.send(err))
 })
 
-// router.delete
-
-// router.post('/api/addUser', async (req, res) => {
-//   try {
-
-//     const salt = await bcrypt.genSalt(saltRounds)
-//     const hash = await bcrypt.hash(req.body.password);
-//     const person = await db.Users.findOne({ where: { username: req.body.username }})
-    
-//     if(person) {
-//       res.send('user already exists, please log in instead')
-//     } else {
-//       db.Users.create({
-//         username: req.body.username,
-//         password: hash
-//       })
-//     res.send('Your credentials have been saved')
-//     }
-//   }
-//   catch(err) {
-//     res.send(err)
-//   }
-// })
-
+// Previous ES7 practices
 router.post('/api/addUser', postUser)
 
 module.exports = router;

@@ -30,7 +30,7 @@ class ToDoList extends Base {
     .then(result => {
       this.setState({
         todos: result.data
-      }, () => console.log('PLISSS', this.state.todos))
+      })
     })
   }
 
@@ -68,6 +68,7 @@ class ToDoList extends Base {
           <ScrollView>
             {this.state.todos.map(todoEntries => (
               <TodoEntry 
+                id={todoEntries.id}
                 entry={todoEntries.entry}
                 isCompleted={todoEntries.isCompleted} 
                 createdAt={todoEntries.createdAt}

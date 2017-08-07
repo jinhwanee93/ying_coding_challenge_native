@@ -6,6 +6,7 @@ import {
   LOGOUT_SUCCESS 
 } from '../actions/Authentication';
 
+// Reducer for Authentication
 const auth = (state = {
   isFetching: false,
   isAuthenticated: AsyncStorage.getItem('id_token') ? true : false,

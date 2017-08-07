@@ -10,11 +10,12 @@ const routes = require('../database/db_routes');
 const PORT = process.env.PORT || 8082;
 
 // Define the express server
+// Using dev tools like morgan to identify statusCode and see if the request went through
 const app = express()
   .use(morgan('dev'))
   .use(cors())
   
-  // Parsing body of the request in { Content-type: x-www-form-urlencoded }
+  // Parsing body of the request in { Content-type: application/json } or { Content-type: x-www-form-urlencoded }
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .use('/', routes)

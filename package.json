@@ -4,6 +4,8 @@
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
+		
+		// Required for backend services to run
 		"serve": "nodemon ./server/server.js",
 		"test": "jest"
 	},

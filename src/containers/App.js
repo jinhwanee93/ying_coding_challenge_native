@@ -7,14 +7,15 @@ import {
 } from 'react-native-router-flux';
 import { 
   View, 
-  Text,
-  StyleSheet 
+  Text
 } from 'react-native';
 import { connect } from 'react-redux';
 import Login from './Login';
 import ToDoList from './ToDoList';
 import SignUp from './SignUp';
 
+
+//Parent container
 
 class App extends Component {
 
@@ -23,7 +24,9 @@ class App extends Component {
     this.state = {}
   }
 
+// Establishing routes for the containers and components
 render() {
+  // Deconstructed Redux functions
   const { dispatch, errorMessage, isAuthenticated } = this.props;
   return(
     <Router>
@@ -38,6 +41,7 @@ render() {
 }
 }
 
+// Connecting file to Redux to access the functions
 mapStateToProps = (state) => {
   const { auth } = state;
   const { isAuthenticated, errorMessage } = auth;

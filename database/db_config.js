@@ -1,5 +1,8 @@
 // Define table colmuns in this file
 const Sequelize = require('sequelize');
+
+// ElephantSQL cloud storage initialized in application, 
+// thought that the application will not require too mich scaling
 const PORTGRES_URL = require('../.env');
 
 const db = new Sequelize(PORTGRES_URL)
@@ -16,6 +19,7 @@ const Users = db.define('users', {
   }
 })
 
+// Defining TASKS tables for the application
 const Tasks = db.define('tasks', {
   entry: {
     type: Sequelize.STRING,
@@ -26,6 +30,7 @@ const Tasks = db.define('tasks', {
   }
 })
 
+// Establishing relationships between the USERS and TASKS
 Users.hasMany(Tasks, { foreignKey: { name: 'user_id', allowNull: true }, onDelete: 'CASCADE' });
 Tasks.belongsTo(Users, { foreignKey: { name: 'user_id', allowNull: true }, onDelete: 'CASCADE' });
 
@@ -33,6 +38,13 @@ Tasks.belongsTo(Users, { foreignKey: { name: 'user_id', allowNull: true }, onDel
 Users.sync()
 Tasks.sync()
 
+// In case I need to nuke the whole database due to schema diagrams being changed
+
+// Users.sync({ force: true })
+// Tasks.sync({ force: true })
+
+
+// Tool to help identify if the databse has been successfully connected
 db.authenticate()
   .then((err) => {
     console.log('Successful connection to the database');

@@ -5,6 +5,8 @@ import {
   StyleSheet 
 } from 'react-native';
 
+
+// Bare bones sign-up container
 class SignUp extends Component {
 
   constructor() {

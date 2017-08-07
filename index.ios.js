@@ -7,13 +7,18 @@ import { AppRegistry } from 'react-native';
 import App from './src/containers/App';
 import rootReducer from './src/reducers/index';
 
+// Disabled logger so the application wont lag as hard
 // const logger = createLogger({});
+
+// Applying middleware and creating store
 const middleWare = [thunk]
 const createStoreWithMiddleWare = applyMiddleware(...middleWare)(createStore);
 
 const store = createStoreWithMiddleWare(rootReducer);
   console.disableYellowBox = true;
 
+// Most parent component of the application, AppRegistry file (similar to regular REACT's ReactDOM.render)
+// Applied Provider 
 export default class coding_challenge extends Component {
   render() {
     return (

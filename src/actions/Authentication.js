@@ -9,6 +9,7 @@ import {
 import ToDoList from '../containers/ToDoList';
 import Login from '../containers/Login';
 
+// Most of Redux functionality, actions are defined here
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -45,6 +46,10 @@ const receiveLogout = () => ({
   isAuthenticated: false,
 });
 
+
+// Logging in the user and sequencing functions through the thunks middleware for dispatching functions 
+// in an organized manner, attempting to avoid asynchronous code firing off at different and possibly
+// random times 
 exports.loginUser = (creds) => {
   return (dispatch) => {
     dispatch(requestLogin(creds));
@@ -66,6 +71,8 @@ exports.loginUser = (creds) => {
   };
 };
 
+
+// Sign up user 
 exports.signupUser = (creds) => {
   const body = {
     username: creds.username,
@@ -86,6 +93,8 @@ exports.signupUser = (creds) => {
   };
 };
 
+
+// Logging out the user
 exports.logoutUser = () => {
   return (dispatch) => {
     dispatch(requestLogout());
