@@ -22,6 +22,11 @@ or
 2. Go to elephantSQL website, sign up and create the instance using the free instance
 3. Copy and Paste link to the ```.env``` file.
 
+### Firing up the server
+
+1. Once all the set-up is complete, to serve up the server with the database run:
+
+  ```npm run serve```
 
 ### Application initialization setting
 
