@@ -14,14 +14,11 @@ import Login from './Login';
 import ToDoList from './ToDoList';
 import SignUp from './SignUp';
 
-
 //Parent container
-
 class App extends Component {
 
   constructor() {
     super()
-    this.state = {}
   }
 
 // Establishing routes for the containers and components
@@ -29,12 +26,12 @@ render() {
   // Deconstructed Redux functions
   const { dispatch, errorMessage, isAuthenticated } = this.props;
   return(
+
     <Router>
       <Scene key="root" >
-        <Scene key="login" component={Login} hideNavBar={true} title="Login" isAuthenticated={isAuthenticated} errorMessage={errorMessage} dispatch={dispatch} />
-        <Scene key="todo" component={ToDoList} hideNavBar={true} title="Todo" initial />
-        <Scene key="signup" component={SignUp} hideNavBar={true} title="Signup" />
-
+        <Scene key="login" component={Login} hideNavBar={true} title="Login" isAuthenticated={isAuthenticated} errorMessage={errorMessage} dispatch={dispatch} initial />
+        <Scene key="todo" component={ToDoList} hideNavBar={true} title="Todo" />
+        <Scene key="signup" component={SignUp} hideNavBar={true} title="Signup" isAuthenticated={isAuthenticated} errorMessage={errorMessage} dispatch={dispatch} />
       </Scene>
     </Router>
   )

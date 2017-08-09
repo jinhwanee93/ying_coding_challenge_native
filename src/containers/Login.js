@@ -3,11 +3,14 @@ import {
   View, 
   Text,
   TextInput,
+  AsyncStorage,
   TouchableOpacity,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { loginUser } from '../actions/Authentication';
 import Base from '../components/Base';
+
+console.log('this is the asynstorage in the global', AsyncStorage.getItem('id_token').then(result => console.log(result)))
 
 class Login extends Base {
 
@@ -50,10 +53,11 @@ class Login extends Base {
   // Rendering login component
   render() {
     return(
-      <View style={{ marginTop: 10 }}>
+      <View style={{ marginTop: 200 }}>
         <TextInput placeholder="username" onChangeText={text => this.usernameChange(text) }></TextInput>
         <TextInput placeholder="password" onChangeText={text => this.passwordChange(text) }></TextInput>
         <TouchableOpacity onPress={ () => { this.handleLoginClick() }}><Text>Login</Text></TouchableOpacity>
+        <TouchableOpacity onPress={ () => { Actions.signup() }}><Text>Sign Up</Text></TouchableOpacity>
       </View>
     )
   }

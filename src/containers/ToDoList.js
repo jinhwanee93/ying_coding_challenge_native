@@ -5,11 +5,14 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  AsyncStorage,
   StyleSheet 
 } from 'react-native';
-import TodoEntry from '../components/ToDoEntry';
+import TodoEntry from './ToDoEntry';
 import axios from 'axios';
 import Base from '../components/Base';
+
+console.log('this is the asynstorage in the global', AsyncStorage.getItem('id_token').then(result => console.log(result)))
 
 class ToDoList extends Base {
   constructor() {
@@ -21,7 +24,8 @@ class ToDoList extends Base {
 
     this.autoBind(
       "handleEntryChange",
-      "handleAdd"
+      "handleAdd",
+      "handleDelete"
     )
   }
 
@@ -53,21 +57,34 @@ class ToDoList extends Base {
   })
   }
 
+  handleDelete(e, c) {
+    axios.delete(`http://localhost:8082/api/deleteTask/${e}`)
+    .then(() => {
+      this.state.todos.splice(c, 1)
+    })
+    .then(() => {
+      this.setState({
+        todos: this.state.todos
+      })
+    })
+  }
+
   render() {
-    console.log('what is the state?', this.state.todos)
     return(
       <View style={styles.container}>
         <TextInput 
           placeholder="todos here" 
           onChangeText={(e) => this.handleEntryChange(e)}>
         </TextInput>
-          <TouchableOpacity 
+          <TouchableOpacity style={{ paddingBottom: 20 }}
             onPress={() => this.handleAdd()}>
               <Text>Add</Text>
           </TouchableOpacity>
           <ScrollView>
             {this.state.todos.map(todoEntries => (
-              <TodoEntry 
+              <TodoEntry
+                deleteFunc={this.handleDelete}
+                indexShiet={this.state.todos.indexOf(todoEntries)} 
                 id={todoEntries.id}
                 entry={todoEntries.entry}
                 isCompleted={todoEntries.isCompleted} 
@@ -84,6 +101,7 @@ class ToDoList extends Base {
 const styles = StyleSheet.create({
   container: {
     marginTop: 100,
+    paddingBottom: 100
   }
 })
 
