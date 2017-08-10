@@ -25,8 +25,6 @@ const postUser = async (req, res) => {
   }
 };
 
-
-
 // Debugging practice for identifying if the users are being plugged in correctly
 router.get('/getUsers', (req, res) => {
   db.Users.findAll()
@@ -88,7 +86,6 @@ router.get('/getOneTask/:task_id', (req, res) => {
 
 // Applying update functionality in case of an edit for a specific task
 router.put('/updateTask/:task_id', (req, res) => {
-  console.log('what is the request coming through here? ', req.body, res.body)
   db.Tasks.findById(req.params.task_id)
   .then((data) => {
     data.update({
@@ -106,6 +103,20 @@ router.delete('/deleteTask/:task_id', (req, res) => {
   db.Tasks.destroy({
     where: { id: req.params.task_id }
   }, res.send('Task has been deleted'))
+  .catch(err => res.send(err))
+})
+
+router.get('/getCompletedTasks/:user_id/:isCompleted', (req, res) => {
+  db.Tasks.findAll({
+    where: { 
+      user_id: req.params.user_id, 
+      isCompleted: req.params.isCompleted
+    }
+  })
+  // , result => res.send(result))
+  .then(result => {
+    res.send(result);
+  })
   .catch(err => res.send(err))
 })
 

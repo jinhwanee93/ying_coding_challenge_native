@@ -26,6 +26,13 @@ class ToDoEntry extends Base {
     )
   }
 
+  componentWillReceiveProps(props) {
+    this.setState({
+      entry: props.entry,
+      completed: props.isCompleted
+    })
+  }
+
   // Handle if the task has been completed or not
   handleToggleComplete(e, c) {
     if(this.state.completed) {
@@ -57,7 +64,7 @@ class ToDoEntry extends Base {
   handleEntryChange(e) {
     this.setState({
       entry: e
-    }, () => console.log('handleEdit state', this.state.entry))
+    })
   }
 
 
@@ -84,8 +91,6 @@ class ToDoEntry extends Base {
   render() {
     return (
       <View style={{ paddingBottom: 20 }}>
-        
-        <Text>Task Id: {this.props.id}</Text>
 
         <TouchableOpacity onPress={() => this.handleEdit()}>{this.state.toggleEdit ? 
             <View>

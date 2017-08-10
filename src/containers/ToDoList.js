@@ -28,6 +28,9 @@ class ToDoList extends Base {
       "handleAdd",
       "handleDelete",
       "handleLogOut",
+      "handleCompletedFilter",
+      "handlePendingFilter",
+      "handleShowAll"
     )
   }
 
@@ -48,6 +51,36 @@ class ToDoList extends Base {
       })
     })
   }
+
+  handleCompletedFilter() {
+    axios.get(`http://localhost:8082/api/getCompletedTasks/${this.state.user_id}/true`)
+    .then(result => {
+      this.setState({
+        todos: result.data
+      })
+    })
+    .catch(err => console.log('error ', err))
+  }
+
+  handlePendingFilter() {
+    axios.get(`http://localhost:8082/api/getCompletedTasks/${this.state.user_id}/false`)
+    .then(result => {
+      this.setState({
+        todos: result.data
+      })
+    })
+    .catch(err => console.log('error ', err))
+  }
+
+  handleShowAll() {
+    axios.get(`http://localhost:8082/api/getTasks/${this.state.user_id}`)
+      .then(result => {
+        this.setState({
+          todos: result.data
+        })
+      })
+      .catch(err => console.log('error ', err))
+    }
 
   handleEntryChange(e) {
     this.setState({
@@ -86,9 +119,21 @@ class ToDoList extends Base {
   }
 
   render() {
-    console.log('what is the current state? ', this.state)
     return(
       <View style={styles.container}>
+
+      <TouchableOpacity 
+        onPress={() => this.handleShowAll()}>
+          <Text>Show All</Text>
+      </TouchableOpacity>
+      <TouchableOpacity 
+        onPress={() => this.handleCompletedFilter()}>
+          <Text>Completed</Text>
+      </TouchableOpacity>
+      <TouchableOpacity 
+        onPress={() => this.handlePendingFilter()}>
+          <Text>Pending</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity 
         onPress={() => this.handleLogOut()}>

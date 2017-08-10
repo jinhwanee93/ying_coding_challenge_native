@@ -9,7 +9,6 @@ import {
 import ToDoList from '../containers/ToDoList';
 import Login from '../containers/Login';
 
-console.log('this is the asynstorage in the global', AsyncStorage)
 // Most of Redux functionality, actions are defined here
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';

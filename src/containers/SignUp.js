@@ -10,7 +10,6 @@ import {
 import Base from '../components/Base'
 import { signupUser } from '../actions/Authentication';
 
-console.log('this is the asynstorage in the global', AsyncStorage.getItem('id_token').then(result => console.log(result)))
 
 // Bare bones sign-up container
 class SignUp extends Base {
@@ -46,13 +45,11 @@ class SignUp extends Base {
       username: this.state.username,
       password: this.state.password
     }
-    console.log('what is the creds? ', creds)
     this.props.dispatch(signupUser(creds))
   }
 
 
   render() {
-    console.log('what is the state? ', this.state)
     return(
       <View style={{ marginTop: 200 }}>
         <TextInput placeholder="username" onChangeText={text => this.usernameChange(text) }></TextInput>
