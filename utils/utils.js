@@ -1,5 +1,5 @@
 
-// Hashing algorithm
+// Hashing algorithm, used for the ID_TOKENS 
 const hasher = (message) => {
   const a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const b = 'nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM';
