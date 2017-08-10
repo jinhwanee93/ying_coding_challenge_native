@@ -1,5 +1,5 @@
 
-// Hashing algorithm for a more secure login functionality
+// Hashing algorithm
 const hasher = (message) => {
   const a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const b = 'nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM';

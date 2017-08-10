@@ -2,14 +2,18 @@ const express = require('express');
 const router = express.Router();
 const db = require('./db_config');
 const utils = require('../utils/utils');
+
+// Attempted to hash the passwords using bcrypt, did not use it for this project
 const bcrypt = require('bcryptjs');
 const Promise = require('bluebird');
 
-// Adding users to the database, playing aronud with ES7 syntax for this route
+// Adding USER to the database, playing aronud with ES7 syntax for this route
 const postUser = async (req, res) => {
   try {
-    // Async await forces a function to return a promise
-    // Basically waiting for this line of code to finish and then executing the next
+
+    // Async await forces a function to return a promise...
+    // Basically waiting for this line of code to finish 
+    // and then executing the next line of code
     const person = await db.Users.findOne({ where: { username: req.body.username } });
     if (person) {
       res.send('That username is taken. Please try another email.');
@@ -25,14 +29,14 @@ const postUser = async (req, res) => {
   }
 };
 
-// Debugging practice for identifying if the users are being plugged in correctly
+// Debugging practice for identifying if the USERS are being plugged in correctly
 router.get('/getUsers', (req, res) => {
   db.Users.findAll()
   .then(users => res.send(users))
   .catch(err => res.send(err))
 })
 
-// Getting information if the username and password credentials match
+// Route identifying USER information and checking if the username and password credentials match
 router.get('/login/:username/:password', (req, res) => {
   db.Users.findOne({
     where: { 
@@ -50,7 +54,7 @@ router.get('/login/:username/:password', (req, res) => {
   .catch(err => res.send(err))
 })
 
-// Adding tasks to the database
+// Route to add a TASK
 router.post('/addTask', (req, res) => {
   db.Tasks.create({
     user_id: req.body.user_id,
@@ -61,7 +65,7 @@ router.post('/addTask', (req, res) => {
   .catch(err => res.send(err))
 })
 
-// Identifying a task by used id
+// Route to identify the TASK_LIST by USER_ID
 router.get('/getTasks/:user_id', (req, res) => {
   db.Tasks.findAll({
     where: { user_id: req.params.user_id }
@@ -70,21 +74,21 @@ router.get('/getTasks/:user_id', (req, res) => {
   .catch(err => res.send(err))
 })
 
-// Debugging the routes, identifying all the tasks in the database
+// Debugging practice to identifying if the TASKS are in the database
 router.get('/getAllTasks/', (req, res) => {
   db.Tasks.findAll()
   .then(tasks => res.send(tasks))
   .catch(err => res.send(err))
 })
 
-// Identifying only one tasks in case data has to be front-loaded in a specified format
+// Route to identify only one TASK in case data has to be front-loaded in a specified format
 router.get('/getOneTask/:task_id', (req, res) => {
   db.Tasks.findById(req.params.task_id)
   .then(tasks => res.send(tasks))
   .catch(err => res.send(err))
 })
 
-// Applying update functionality in case of an edit for a specific task
+// Route to update or edit a specific TASK 
 router.put('/updateTask/:task_id', (req, res) => {
   db.Tasks.findById(req.params.task_id)
   .then((data) => {
@@ -98,7 +102,7 @@ router.put('/updateTask/:task_id', (req, res) => {
   .catch(err => res.send(err))
 })
 
-// Applied a deleting route for deletion functionality
+// Route to delete a specific TASK
 router.delete('/deleteTask/:task_id', (req, res) => {
   db.Tasks.destroy({
     where: { id: req.params.task_id }
@@ -106,6 +110,7 @@ router.delete('/deleteTask/:task_id', (req, res) => {
   .catch(err => res.send(err))
 })
 
+// Route to filter if the TASK is COMPLETED or PENDING
 router.get('/getCompletedTasks/:user_id/:isCompleted', (req, res) => {
   db.Tasks.findAll({
     where: { 
@@ -113,7 +118,6 @@ router.get('/getCompletedTasks/:user_id/:isCompleted', (req, res) => {
       isCompleted: req.params.isCompleted
     }
   })
-  // , result => res.send(result))
   .then(result => {
     res.send(result);
   })

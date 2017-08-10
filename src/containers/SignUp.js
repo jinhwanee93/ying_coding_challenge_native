@@ -7,11 +7,12 @@ import {
   AsyncStorage,
   StyleSheet 
 } from 'react-native';
-import Base from '../components/Base'
+import { Actions } from 'react-native-router-flux';
 import { signupUser } from '../actions/Authentication';
+import Base from '../components/Base'
 
 
-// Bare bones sign-up container
+// SignUp component
 class SignUp extends Base {
 
   constructor() {
@@ -27,6 +28,7 @@ class SignUp extends Base {
     )
   }
 
+  // Handle username input
    usernameChange (e) {
     this.setState({
       username: e
@@ -40,6 +42,7 @@ class SignUp extends Base {
     })
   }
 
+  // Handle signup submission
   handleSignUpClick() {
     const creds = { 
       username: this.state.username,
@@ -51,13 +54,44 @@ class SignUp extends Base {
 
   render() {
     return(
-      <View style={{ marginTop: 200 }}>
-        <TextInput placeholder="username" onChangeText={text => this.usernameChange(text) }></TextInput>
-        <TextInput placeholder="password" onChangeText={text => this.passwordChange(text) }></TextInput>
-        <TouchableOpacity onPress={ () => { this.handleSignUpClick() }}><Text>Sign Up</Text></TouchableOpacity>
+      <View style={styles.container}>
+        <TextInput 
+          style={styles.username}
+          placeholder="username" 
+          onChangeText={text => this.usernameChange(text) }>
+        </TextInput>
+        <TextInput 
+          style={styles.password}
+          placeholder="password" 
+          onChangeText={text => this.passwordChange(text) }>
+        </TextInput>
+        <TouchableOpacity 
+          onPress={ () => { this.handleSignUpClick() }}>
+            <Text>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          onPress={ () => { Actions.login() }}>
+            <Text>Back to Login</Text>
+        </TouchableOpacity>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 200
+  },
+  username: {
+    borderBottomColor: '#bbb',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomRightRadius: 10
+  },
+  password: {
+    borderBottomColor: '#bbb',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomRightRadius: 10
+  }
+})
 
 export default SignUp;

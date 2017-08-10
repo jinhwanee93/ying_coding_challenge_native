@@ -49,7 +49,11 @@ const receiveLogout = () => ({
 
 // Logging in the user and sequencing functions through the thunks middleware for dispatching functions 
 // in an organized manner, attempting to avoid asynchronous code firing off at different and possibly
-// random times 
+// random times... 
+
+// Also setting id_token for login autherization, this is used to kill session of a user so that when 
+// another user logs in the tasks are not persisted to a different user
+
 exports.loginUser = (creds) => {
   return (dispatch) => {
     dispatch(requestLogin(creds));
@@ -93,6 +97,8 @@ exports.signupUser = (creds) => {
 
 
 // Logging out the user
+// Killing id_token
+
 exports.logoutUser = () => {
   return (dispatch) => {
     dispatch(requestLogout());

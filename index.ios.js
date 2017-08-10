@@ -7,7 +7,7 @@ import { AppRegistry } from 'react-native';
 import App from './src/containers/App';
 import rootReducer from './src/reducers/index';
 
-// Disabled logger so the application wont lag as hard
+// Disabled logger so the application won't lag as hard
 // const logger = createLogger({});
 
 // Applying middleware and creating store
@@ -29,4 +29,5 @@ export default class coding_challenge extends Component {
   }
 }
 
+// Rendering the application on the mobile environment
 AppRegistry.registerComponent('coding_challenge', () => coding_challenge);

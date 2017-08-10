@@ -5,6 +5,7 @@ import {
   TextInput,
   AsyncStorage,
   TouchableOpacity,
+  Image,
   StyleSheet
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -54,11 +55,36 @@ class Login extends Base {
     return(
       <View style={styles.container}>
         <Text style={styles.title}>TODO</Text>
-        <Text style={styles.description}>Login to Your Tasks</Text>
-        <TextInput style={styles.username} placeholder="username" onChangeText={text => this.usernameChange(text) }></TextInput>
-        <TextInput style={styles.password} placeholder="password" onChangeText={text => this.passwordChange(text) }></TextInput>
-        <TouchableOpacity onPress={ () => { this.handleLoginClick() }}><Text>Login</Text></TouchableOpacity>
-        <TouchableOpacity onPress={ () => { Actions.signup() }}><Text>Sign Up</Text></TouchableOpacity>
+        <Text style={styles.description}>Login to View Your Tasks</Text>
+
+        <TextInput 
+          style={styles.username} 
+          placeholder="username" 
+          onChangeText={text => this.usernameChange(text) }>
+        </TextInput>
+        <TextInput 
+          style={styles.password} 
+          placeholder="password" 
+          onChangeText={text => this.passwordChange(text) }>
+        </TextInput>
+
+      <View style={{ paddingTop: 15, flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+        <TouchableOpacity 
+          onPress={ () => { this.handleLoginClick() }}>
+            <Image 
+              style={{ height: 40, width: 40 }} 
+              source={ require('../assets/log_in.png')} />
+            <Text>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          onPress={ () => { Actions.signup() }}>
+            <Image 
+              style={{ height: 40, width: 40 }} 
+              source={ require('../assets/sign_up.png')} />
+            <Text>SignUp</Text>
+        </TouchableOpacity>
+      </View>
+
       </View>
     )
   }
@@ -81,11 +107,13 @@ const styles = StyleSheet.create({
     marginTop: 100,
     borderBottomColor: '#bbb',
     borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomRightRadius: 10
   },
   password: {
     borderBottomColor: '#bbb',
     borderBottomWidth: StyleSheet.hairlineWidth,
-  }
+    borderBottomRightRadius: 10
+  },
 })
 
 export default Login;

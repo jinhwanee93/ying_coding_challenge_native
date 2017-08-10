@@ -3,7 +3,9 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  View
+  View,
+  Image,
+  StyleSheet
 } from 'react-native';
 import Base from '../components/Base';
 import axios from 'axios';
@@ -26,6 +28,7 @@ class ToDoEntry extends Base {
     )
   }
 
+  // Updating props to properly display filtered TASKS (completed vs, pending)
   componentWillReceiveProps(props) {
     this.setState({
       entry: props.entry,
@@ -60,7 +63,7 @@ class ToDoEntry extends Base {
     }
   }
   
-
+// Handle TASK entry change
   handleEntryChange(e) {
     this.setState({
       entry: e
@@ -68,6 +71,7 @@ class ToDoEntry extends Base {
   }
 
 
+  // Handle editting submission
   handleSubmitEdit() {
     const body = {
       entry: this.state.entry
@@ -87,39 +91,69 @@ class ToDoEntry extends Base {
     })
   }
 
-  // Rendering components in an MVP fashion
   render() {
     return (
-      <View style={{ paddingBottom: 20 }}>
-
-        <TouchableOpacity onPress={() => this.handleEdit()}>{this.state.toggleEdit ? 
-            <View>
+      <View style={styles.entry}>
+        <Text>Date: {this.props.createdAt.slice(0, 10)}</Text>
+        <TouchableOpacity 
+          onPress={() => this.handleEdit()}>{this.state.toggleEdit ? 
+            <View style={{ flexDirection: 'row' }}>
               <TextInput 
                 placeholder="Edit the task" 
                 onChangeText={(e) => this.handleEntryChange(e)}>
               </TextInput>
-              <TouchableOpacity onPress={() => this.handleSubmitEdit()}>  
-                <Text>Submit</Text>
+              <TouchableOpacity 
+                onPress={() => this.handleSubmitEdit()}>  
+                <Image 
+                  style={{ height: 15, width: 15 }}
+                  source={require('../assets/submit.png')}/>
               </TouchableOpacity>
             </View>
              : 
-            <Text> 
-              {this.state.entry}
-            </Text>}
+            <View style={{ flexDirection: 'row' }}>
+              <Text> 
+                {this.state.entry}
+              </Text>
+              <Image 
+                  style={{ height: 15, width: 15 }}
+                  source={require('../assets/edit.png')}/>
+            </View>}
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={(e, c) => this.props.deleteFunc(this.state.task_id, this.props.indexShiet)}>
-          <Text>X</Text>
+        <View 
+          style={{ flexDirection: 'row' }}>    
+        <TouchableOpacity 
+          onPress={(e, c) => this.props.deleteFunc(this.state.task_id, this.props.index)}>
+            <Image 
+              style={{ height: 30 , width: 30 }}
+              source={require('../assets/entry_delete.png')}/>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={(e, c) => this.handleToggleComplete(this.props.id, this.props.entry)}>
-            {this.state.completed ? <Text>Completed</Text> : <Text>Pending</Text>}
+            {this.state.completed ? 
+              <Image 
+                style={{ height: 30 , width: 30 }} 
+                source={require('../assets/completed.png')} /> :
+              <Image 
+                style={{ height: 30 , width: 30 }} 
+                source={require('../assets/entry_pending.png')} />
+            }
         </TouchableOpacity>
-        <Text>Create At: {this.props.createdAt}</Text> 
+        </View> 
       </View>    
     )
   }
 };
+
+const styles = StyleSheet.create({
+  entry: {
+    paddingBottom: 20,
+    marginTop: 20,
+    borderBottomColor: '#bbb',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomRightRadius: 10
+  }
+})
 
 export default ToDoEntry;

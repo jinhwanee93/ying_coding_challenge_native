@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   AsyncStorage,
+  Image,
   StyleSheet 
 } from 'react-native';
 import TodoEntry from './ToDoEntry';
@@ -34,7 +35,7 @@ class ToDoList extends Base {
     )
   }
 
-
+// Front-load USER id
   componentWillMount() {
     AsyncStorage.getItem('id_token')
     .then(result => {
@@ -52,6 +53,7 @@ class ToDoList extends Base {
     })
   }
 
+  // Shows completed TASK_LIST
   handleCompletedFilter() {
     axios.get(`http://localhost:8082/api/getCompletedTasks/${this.state.user_id}/true`)
     .then(result => {
@@ -62,6 +64,7 @@ class ToDoList extends Base {
     .catch(err => console.log('error ', err))
   }
 
+  // Shows pending TASK_LIST
   handlePendingFilter() {
     axios.get(`http://localhost:8082/api/getCompletedTasks/${this.state.user_id}/false`)
     .then(result => {
@@ -72,6 +75,7 @@ class ToDoList extends Base {
     .catch(err => console.log('error ', err))
   }
 
+  // Shows all the TASKS
   handleShowAll() {
     axios.get(`http://localhost:8082/api/getTasks/${this.state.user_id}`)
       .then(result => {
@@ -82,12 +86,14 @@ class ToDoList extends Base {
       .catch(err => console.log('error ', err))
     }
 
+  // Handle entry change
   handleEntryChange(e) {
     this.setState({
       entry: e
     })
   }
 
+  // Handle adding a new TASK
   handleAdd() {
     const body = {
       user_id: this.state.user_id,
@@ -102,6 +108,7 @@ class ToDoList extends Base {
   })
   }
 
+  // Handle deleting a TASK
   handleDelete(e, c) {
     axios.delete(`http://localhost:8082/api/deleteTask/${e}`)
     .then(() => {
@@ -114,6 +121,7 @@ class ToDoList extends Base {
     })
   }
 
+  // Handle logout
   handleLogOut() {
     this.props.dispatch(logoutUser())
   }
@@ -122,40 +130,63 @@ class ToDoList extends Base {
     return(
       <View style={styles.container}>
 
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
       <TouchableOpacity 
+        style={styles.centerImages}
         onPress={() => this.handleShowAll()}>
-          <Text>Show All</Text>
-      </TouchableOpacity>
-      <TouchableOpacity 
-        onPress={() => this.handleCompletedFilter()}>
-          <Text>Completed</Text>
-      </TouchableOpacity>
-      <TouchableOpacity 
-        onPress={() => this.handlePendingFilter()}>
-          <Text>Pending</Text>
+          <Image 
+            style={{ height: 40, width: 40 }}
+            source={require('../assets/show_all.png')}/>
+              <Text>Show All</Text>
       </TouchableOpacity>
 
       <TouchableOpacity 
-        onPress={() => this.handleLogOut()}>
-          <Text>Logout</Text>
+        style={styles.centerImages}
+        onPress={() => this.handleCompletedFilter()}>
+          <Image 
+              style={{ height: 40, width: 40 }}
+              source={require('../assets/completed.png')}/>
+                <Text>Completed</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity 
+        style={styles.centerImages}
+        onPress={() => this.handlePendingFilter()}>
+          <Image 
+            style={{ height: 40, width: 40 }}
+            source={require('../assets/pending.png')}/>
+              <Text>Pending</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity 
+        style={styles.centerImages}
+        onPress={() => this.handleLogOut()}>
+          <Image 
+            style={{ height: 40, width: 40 }}
+            source={require('../assets/log_out.png')}/>
+              <Text>Logout</Text>
+      </TouchableOpacity>
+      </View>
 
         <TextInput 
+          style={styles.input}
           placeholder="todos here" 
           onChangeText={(e) => this.handleEntryChange(e)}>
         </TextInput>
 
         <TouchableOpacity 
-          style={{ paddingBottom: 20 }}
+          style={styles.add}
           onPress={() => this.handleAdd()}>
             <Text>Add</Text>
         </TouchableOpacity>
 
-          <ScrollView>
+          <ScrollView 
+            style={styles.scroll}>
             {this.state.todos.map(todoEntries => (
               <TodoEntry
                 key={this.state.todos.indexOf(todoEntries)}
-                indexShiet={this.state.todos.indexOf(todoEntries)} 
+                index={this.state.todos.indexOf(todoEntries)} 
                 deleteFunc={this.handleDelete}
                 id={todoEntries.id}
                 entry={todoEntries.entry}
@@ -171,8 +202,23 @@ class ToDoList extends Base {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    paddingBottom: 100
+    marginTop: 40,
+    paddingBottom: 10
+  },
+  input: {
+    marginTop: 20,
+     borderBottomColor: '#bbb',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomRightRadius: 10
+  },
+  add: {
+    paddingBottom: 20
+  },
+  scroll: {
+    height: 450
+  },
+  centerImages: {
+    alignItems: 'center'
   }
 })
 

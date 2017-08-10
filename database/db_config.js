@@ -7,7 +7,7 @@ const PORTGRES_URL = require('../.env');
 
 const db = new Sequelize(PORTGRES_URL)
 
-// Defining USERS tables for the application
+// Defining USERS table
 const Users = db.define('users', {
   password: {
     type: Sequelize.STRING,
@@ -19,7 +19,7 @@ const Users = db.define('users', {
   }
 })
 
-// Defining TASKS tables for the application
+// Defining TASKS table
 const Tasks = db.define('tasks', {
   entry: {
     type: Sequelize.STRING,
@@ -30,7 +30,7 @@ const Tasks = db.define('tasks', {
   }
 })
 
-// Establishing relationships between the USERS and TASKS
+// Establishing relationships between USERS and TASKS
 Users.hasMany(Tasks, { foreignKey: { name: 'user_id', allowNull: true }, onDelete: 'CASCADE' });
 Tasks.belongsTo(Users, { foreignKey: { name: 'user_id', allowNull: true }, onDelete: 'CASCADE' });
 
@@ -44,7 +44,7 @@ Tasks.sync()
 // Tasks.sync({ force: true })
 
 
-// Tool to help identify if the databse has been successfully connected
+// Tool to help identify if the database has been successfully connected
 db.authenticate()
   .then((err) => {
     console.log('Successful connection to the database');
@@ -53,6 +53,7 @@ db.authenticate()
     console.log('Cannot connect to the databse due to:', err);
   })
 
+// Exporting the tables
   module.exports = {
     Users: Users,
     Tasks: Tasks
