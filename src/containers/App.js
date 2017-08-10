@@ -29,8 +29,8 @@ render() {
 
     <Router>
       <Scene key="root" >
-        <Scene key="login" component={Login} hideNavBar={true} title="Login" isAuthenticated={isAuthenticated} errorMessage={errorMessage} dispatch={dispatch} />
-        <Scene key="todo" component={ToDoList} hideNavBar={true} title="Todo" isAuthenticated={isAuthenticated} dispatch={dispatch} initial />
+        <Scene key="login" component={Login} hideNavBar={true} title="Login" isAuthenticated={isAuthenticated} errorMessage={errorMessage} dispatch={dispatch} initial />
+        <Scene key="todo" component={ToDoList} hideNavBar={true} title="Todo" isAuthenticated={isAuthenticated} dispatch={dispatch} />
         <Scene key="signup" component={SignUp} hideNavBar={true} title="Signup" isAuthenticated={isAuthenticated} errorMessage={errorMessage} dispatch={dispatch} />
       </Scene>
     </Router>
