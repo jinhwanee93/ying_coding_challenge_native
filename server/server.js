@@ -18,7 +18,7 @@ const app = express()
   // Parsing body of the request in { Content-type: application/json } or { Content-type: x-www-form-urlencoded }
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
-  .use('/', routes)
+  .use('/api', routes)
 
 // Define server, listening on specified port
 const server = app.listen(PORT, () => {

@@ -11,13 +11,14 @@ import {
 import TodoEntry from './ToDoEntry';
 import axios from 'axios';
 import Base from '../components/Base';
+import { logoutUser } from '../actions/Authentication';
 
-console.log('this is the asynstorage in the global', AsyncStorage.getItem('id_token').then(result => console.log(result)))
 
 class ToDoList extends Base {
   constructor() {
     super()
     this.state = {
+      user_id: '',
       entry: '',
       todos: [],
     }
@@ -25,15 +26,25 @@ class ToDoList extends Base {
     this.autoBind(
       "handleEntryChange",
       "handleAdd",
-      "handleDelete"
+      "handleDelete",
+      "handleLogOut",
     )
   }
 
+
   componentWillMount() {
-    axios.get('http://localhost:8082/api/getAllTasks')
+    AsyncStorage.getItem('id_token')
     .then(result => {
       this.setState({
-        todos: result.data
+        user_id: result
+      })
+    })
+    .then(() => {
+      axios.get(`http://localhost:8082/api/getTasks/${this.state.user_id}`)
+      .then(result => {
+        this.setState({
+          todos: result.data
+        })
       })
     })
   }
@@ -46,6 +57,7 @@ class ToDoList extends Base {
 
   handleAdd() {
     const body = {
+      user_id: this.state.user_id,
       entry: this.state.entry,
       isCompleted: false
     }
@@ -69,22 +81,37 @@ class ToDoList extends Base {
     })
   }
 
+  handleLogOut() {
+    this.props.dispatch(logoutUser())
+  }
+
   render() {
+    console.log('what is the current state? ', this.state)
     return(
       <View style={styles.container}>
+
+      <TouchableOpacity 
+        onPress={() => this.handleLogOut()}>
+          <Text>Logout</Text>
+      </TouchableOpacity>
+
         <TextInput 
           placeholder="todos here" 
           onChangeText={(e) => this.handleEntryChange(e)}>
         </TextInput>
-          <TouchableOpacity style={{ paddingBottom: 20 }}
-            onPress={() => this.handleAdd()}>
-              <Text>Add</Text>
-          </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={{ paddingBottom: 20 }}
+          onPress={() => this.handleAdd()}>
+            <Text>Add</Text>
+        </TouchableOpacity>
+
           <ScrollView>
             {this.state.todos.map(todoEntries => (
               <TodoEntry
-                deleteFunc={this.handleDelete}
+                key={this.state.todos.indexOf(todoEntries)}
                 indexShiet={this.state.todos.indexOf(todoEntries)} 
+                deleteFunc={this.handleDelete}
                 id={todoEntries.id}
                 entry={todoEntries.entry}
                 isCompleted={todoEntries.isCompleted} 
@@ -92,7 +119,6 @@ class ToDoList extends Base {
               />
             ))}
           </ScrollView>
-          <TodoEntry />
       </View>
     )
   }

@@ -61,7 +61,7 @@ exports.loginUser = (creds) => {
           Actions.login();
           return Promise.reject(response);
         } else {
-          AsyncStorage.setItem('id_token', response.data.id_token)
+          AsyncStorage.setItem('id_token', JSON.stringify(response.data.user.id))
           dispatch(receiveLogin(response.data));
           Actions.todo();
         }
@@ -78,12 +78,10 @@ exports.signupUser = (creds) => {
     username: creds.username,
     password: creds.password,
   };
-  console.log('the body', body)
   return (dispatch) => {
     dispatch(requestLogin(creds));
     return axios.post('http://localhost:8082/api/addUser', body)
       .then((response) => {
-        console.log('what is the response? ', response.data)
         AsyncStorage.setItem('id_token', response.data.id_token);
         dispatch(receiveLogin(response.data));
         Actions.login();

@@ -5,12 +5,11 @@ import {
   TextInput,
   AsyncStorage,
   TouchableOpacity,
+  StyleSheet
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { loginUser } from '../actions/Authentication';
 import Base from '../components/Base';
-
-console.log('this is the asynstorage in the global', AsyncStorage.getItem('id_token').then(result => console.log(result)))
 
 class Login extends Base {
 
@@ -53,14 +52,40 @@ class Login extends Base {
   // Rendering login component
   render() {
     return(
-      <View style={{ marginTop: 200 }}>
-        <TextInput placeholder="username" onChangeText={text => this.usernameChange(text) }></TextInput>
-        <TextInput placeholder="password" onChangeText={text => this.passwordChange(text) }></TextInput>
+      <View style={styles.container}>
+        <Text style={styles.title}>TODO</Text>
+        <Text style={styles.description}>Login to Your Tasks</Text>
+        <TextInput style={styles.username} placeholder="username" onChangeText={text => this.usernameChange(text) }></TextInput>
+        <TextInput style={styles.password} placeholder="password" onChangeText={text => this.passwordChange(text) }></TextInput>
         <TouchableOpacity onPress={ () => { this.handleLoginClick() }}><Text>Login</Text></TouchableOpacity>
         <TouchableOpacity onPress={ () => { Actions.signup() }}><Text>Sign Up</Text></TouchableOpacity>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 100
+  },
+  title: {
+    fontSize: 100,
+    textAlign: 'center'
+  },
+  description: {
+    marginTop: 40,
+    fontSize: 20,
+    textAlign: 'center'
+  },
+  username: {
+    marginTop: 100,
+    borderBottomColor: '#bbb',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  password: {
+    borderBottomColor: '#bbb',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  }
+})
 
 export default Login;

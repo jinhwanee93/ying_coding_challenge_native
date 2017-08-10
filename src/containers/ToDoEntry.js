@@ -16,7 +16,7 @@ class ToDoEntry extends Base {
       task_id: this.props.id,
       entry: this.props.entry,
       completed: this.props.isCompleted,
-      toggleEdit: false
+      toggleEdit: false,
     }
     this.autoBind(
       "handleToggleComplete",
@@ -82,9 +82,9 @@ class ToDoEntry extends Base {
 
   // Rendering components in an MVP fashion
   render() {
-    console.log('what is the state of entry? ', this.state.entry)
     return (
       <View style={{ paddingBottom: 20 }}>
+        
         <Text>Task Id: {this.props.id}</Text>
 
         <TouchableOpacity onPress={() => this.handleEdit()}>{this.state.toggleEdit ? 
@@ -111,7 +111,7 @@ class ToDoEntry extends Base {
           onPress={(e, c) => this.handleToggleComplete(this.props.id, this.props.entry)}>
             {this.state.completed ? <Text>Completed</Text> : <Text>Pending</Text>}
         </TouchableOpacity>
-        <Text>Create At: {this.props.createdAt}</Text>
+        <Text>Create At: {this.props.createdAt}</Text> 
       </View>    
     )
   }
